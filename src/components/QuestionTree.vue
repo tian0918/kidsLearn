@@ -16,7 +16,7 @@
       <!-- 子节点 + 操作符 -->
       <div class="children-row">
         <div  class="node child" ref="leftRef">
-          <input v-model="leftValue" @change="handleLeftChange" />
+          <input  v-model="leftValue" @change="handleLeftChange" />
         </div>
 
         <div class="node op">
@@ -29,14 +29,13 @@
         </div>
       </div>
     </div>
+    
   </div>
 </template>
 
 <script setup>
 import { ref, onMounted, onBeforeUnmount, defineProps, computed } from "vue";
-import { useQuestion } from "@/stores/question";
 
-const questionStore = useQuestion();
 
 const emit = defineEmits(['handleNext'])
 const props = defineProps(['question']);
@@ -46,6 +45,7 @@ const rootValue = ref(item.value.result);
 const leftValue = ref(Math.random() > 0.5 ? item.value.left : '');
 const rightValue =  ref(leftValue.value == "" ? item.value.right : '');;
 const operator = ref("+");
+
 
 // DOM 引用
 const rootRef = ref(null);
@@ -113,54 +113,46 @@ onBeforeUnmount(() => {
 });
 
 const handleLeftChange = (e) => { 
-  const calResult = Number(rightValue.value) + Number(e.target.value);
-  let his = {...item.value}
-  if (calResult === Number(item.value.result)) { 
-    console.log("回答正确，下一题");
-    his['correct'] = true
-    questionStore.addQuestion(his)
-    emit('handleNext')
-  } else {
-    his['correct'] = false;
-    his['wronResult'] = calResult;
-    his['wrongPlace'] = 'left'
-    questionStore.addQuestion(his)
-    addShakeAnimation(leftRef.value)
-  }
-  
+  const currentResult = Number(rightValue.value) + Number(e.target.value);
+  calculatorResult(currentResult,'left')
 }
 const handleRightChange = (e) => { 
-
-  const calResult = +leftValue.value + +e.target.value;
-  let his = {...item.value}
-  if (calResult === +item.value.result) { 
-    console.log("回答正确，下一题");
-     his['correct'] = true
-     questionStore.addQuestion(his)
-     emit('handleNext')
-  } else {
-     his['correct'] = false;
-    his['wronResult'] = calResult;
-    his['wrongPlace'] = 'left'
-    questionStore.addQuestion(his)
-      addShakeAnimation(rightRef.value)
-    // isShake.value = true
-    // setTimeout(() => {
-    //   isShake.value = false
-    // }, 1000);
-  }
+  const currentResult = +leftValue.value + +e.target.value;
+  calculatorResult(currentResult,'right')
 }
+const calculatorResult = (result,shakeNode) => { 
+  let recordObj = { ...item.value }
+    recordObj.updateTime = Date.now();
+  if (result === Number(item.value.result)) { 
+    recordObj['correct'] = true
+    
+      emit('handleNext',recordObj)
+  } else {
+    recordObj['correct'] = false;
+    recordObj['wronResult'] = result;
+    recordObj['wrondNode'] = shakeNode
+    addShakeAnimation(shakeNode == 'left' ? leftRef.value : rightRef.value).then(res => { 
+      // questionStore.addQuestion(recordObj)
+      emit('handleNext',recordObj)
+
+    })
+  }
+};
 const addShakeAnimation = (element) => {
-  const x = element
-    x.classList.add('shake')
-    x.addEventListener(
-      'animationend',
-      () => {
-        x.classList.remove('shake');
-        rightValue.value = ""; // 动画结束后移除
+  return new Promise((resolve) => { 
+    const el = element;
+    el.classList.add('shake');
+    el.addEventListener('animationend',
+      () => { 
+        el.classList.remove('shake');
+        rightValue.value = ""; 
+        resolve()
       },
-      { once: true }
-    );
+      {
+        once: true
+      }
+    )
+  })
  };
 </script>
 
@@ -203,11 +195,11 @@ input {
   border:none;
   font-size: 22px;
 }
-.node input:focus {
+/* .node input:focus {
   outline: none;
   border-color: red;
   
-}
+} */
 .node input {
   outline: none;
   border: none;

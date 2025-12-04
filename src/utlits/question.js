@@ -2,7 +2,7 @@
 /*
 mode:easy hard and only control operator
 */
-export const generateQuestions = (count = 30, max = 20, mode = 'easy') => {
+export const generateQuestions = (count = 2, max = 20, mode = 'easy') => {
   const questions = [];
   for (let i = 1; i <= count; i++) {
     let a = Math.floor(Math.random() * (max - 10 + 1)) + 10;

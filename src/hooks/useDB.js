@@ -30,8 +30,10 @@ export function useDB() {
 
           store.createIndex("updateTime", "updateTime", { unique: false });
           store.createIndex("correct", "correct", { unique: false });
-          store.createIndex("op", "op", { unique: false });
+          // store.createIndex("op", "op", { unique: false });
           store.createIndex("wrongNode", "wrongNode", { unique: false });
+          store.createIndex('question', "question", { multiEntry: true, unique: false })
+          store.createIndex('answer', "answer", { multiEntry: true, unique: false })
         }
       };
     });

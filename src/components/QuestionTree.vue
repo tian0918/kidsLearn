@@ -120,17 +120,21 @@ const handleRightChange = (e) => {
   const currentResult = +leftValue.value + +e.target.value;
   calculatorResult(currentResult,'right')
 }
-const calculatorResult = (result,shakeNode) => { 
-  let recordObj = { ...item.value }
-    recordObj.updateTime = Date.now();
+const calculatorResult = (result, shakeNode) => { 
+  const question = (({ id, ...rest }) => rest)(item.value);
+  let recordObj = { question: JSON.stringify(question)  }
+  recordObj.updateTime = Date.now();
+  let answer = {
+    place: shakeNode,
+    value: shakeNode == 'left' ? leftValue.value : rightValue.value
+  };
+  recordObj['answer'] = JSON.stringify(answer)
   if (result === Number(item.value.result)) { 
     recordObj['correct'] = true
     
       emit('handleNext',recordObj)
   } else {
     recordObj['correct'] = false;
-    recordObj['wronResult'] = result;
-    recordObj['wrondNode'] = shakeNode
     addShakeAnimation(shakeNode == 'left' ? leftRef.value : rightRef.value).then(res => { 
       // questionStore.addQuestion(recordObj)
       emit('handleNext',recordObj)

@@ -43,9 +43,21 @@ export function useDB() {
     return new Promise((resolve, reject) => {
       const tx = db.transaction(STORE_NAME, "readwrite");
       const store = tx.objectStore(STORE_NAME);
-      const req = store.add(record);
+      const req = store.add({ ...record, synced: false });
 
       req.onsuccess = () => resolve(req.result);
+      req.onerror = () => reject(req.error);
+    });
+  };
+  const getPendingRecords = async () => {
+    const db = await initDB();
+    return new Promise((resolve, reject) => {
+      const tx = db.transaction(STORE_NAME, "readonly");
+      const store = tx.objectStore(STORE_NAME);
+      const req = store.getAll();
+      req.onsuccess = () => {
+        resolve(req.result.filter(r => !r.synced));
+      };
       req.onerror = () => reject(req.error);
     });
   };
@@ -95,17 +107,17 @@ export function useDB() {
   };
 
   // 6. 更新记录
-  const updateRecord = async (record) => {
-    const db = await initDB();
-    return new Promise((resolve, reject) => {
-      const tx = db.transaction(STORE_NAME, "readwrite");
-      const store = tx.objectStore(STORE_NAME);
-      const req = store.put(record);
+  // const updateRecord = async (record) => {
+  //   const db = await initDB();
+  //   return new Promise((resolve, reject) => {
+  //     const tx = db.transaction(STORE_NAME, "readwrite");
+  //     const store = tx.objectStore(STORE_NAME);
+  //     const req = store.put(record);
 
-      req.onsuccess = () => resolve(true);
-      req.onerror = () => reject(req.error);
-    });
-  };
+  //     req.onsuccess = () => resolve(true);
+  //     req.onerror = () => reject(req.error);
+  //   });
+  // };
 
   // 7. 删除
   const deleteRecord = async (id) => {
@@ -126,7 +138,7 @@ export function useDB() {
     getAllRecords,
     getRecordsByTime,
     getWrongRecords,
-    updateRecord,
+    getPendingRecords,
     deleteRecord,
   };
 }

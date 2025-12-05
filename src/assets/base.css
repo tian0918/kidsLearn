@@ -19,6 +19,12 @@
   --vt-c-text-light-2: rgba(60, 60, 60, 0.66);
   --vt-c-text-dark-1: var(--vt-c-white);
   --vt-c-text-dark-2: rgba(235, 235, 235, 0.64);
+
+  --primary-color: #FFD93D; /* 明亮黄 */
+--accent-color: #FF6B6B;  /* 珊瑚红 */
+--bg-color: #4D96FF;      /* 天空蓝 */
+--text-color: #333333;
+--card-bg: #FFFFFF;
 }
 
 /* semantic color variables for this project */

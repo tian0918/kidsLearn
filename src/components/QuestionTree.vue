@@ -1,12 +1,23 @@
+
 <template>
-  <div class="tree-container">
+  <div class="tree-container bond-stage">
 
     <!-- SVG 连线层 -->
-    <svg ref="svgRef" class="svg-layer">
+    <!-- <svg ref="svgRef" class="svg-layer">
       <line ref="lineLeft" class="link"></line>
       <line ref="lineRight" class="link"></line>
-    </svg>
-
+    </svg> -->
+    <svg class="connections" viewBox="0 0 300 200">
+        <!-- 左边的线 -->
+        <line x1="150" y1="50" x2="60" y2="150" stroke="#B0BEC5" stroke-width="8" stroke-linecap="round" />
+        <!-- 右边的线 -->
+        <line x1="150" y1="50" x2="240" y2="150" stroke="#B0BEC5" stroke-width="8" stroke-linecap="round" />
+      </svg>
+      <div class="node top-node">
+        <div class="block total-block animate-drop">
+          {{ totalNum }}
+        </div>
+      </div>
     <div class="tree">
       <!-- 根节点 -->
       <div class="node root" ref="rootRef">
@@ -32,6 +43,7 @@
     
   </div>
 </template>
+
 
 <script setup>
 import { ref, onMounted, onBeforeUnmount, defineProps, computed } from "vue";
@@ -142,6 +154,7 @@ const calculatorResult = (result, shakeNode) => {
     })
   }
 };
+
 const addShakeAnimation = (element) => {
   return new Promise((resolve) => { 
     const el = element;
@@ -162,12 +175,132 @@ const addShakeAnimation = (element) => {
 
 <style scoped>
 .tree-container {
-  width: 100%;
+  /* width: 100%;
   max-width: 300px;
   margin: auto;
+  position: relative; */
+}
+.bond-stage {
+  flex: 1;
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding-bottom: 20px;
+}
+/* SVG 连线层，绝对定位在方块后面 */
+.connections {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -60%); /* 稍微上移以对齐方块中心 */
+  width: 300px;
+  height: 250px;
+  z-index: 0;
+  pointer-events: none;
+}
+/* 通用积木块样式 */
+.block {
+  width: 80px;
+  height: 80px;
+  border-radius: 16px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 36px;
+  font-weight: 800;
+  box-shadow: 0 6px 0 rgba(0,0,0,0.15); /* 3D厚度 */
+  transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
   position: relative;
 }
+.top-node {
+  margin-bottom: 60px; /* 撑开上下距离 */
+  z-index: 2;
+  
+  .total-block {
+    background: #42A5F5;
+    color: white;
+    box-shadow: 0 6px 0 darken(#42A5F5, 15%);
+    width: 90px;
+    height: 90px;
+    font-size: 40px;
+  }
+}
+.bottom-row {
+  display: flex;
+  align-items: center;
+  gap: 15px;
+  z-index: 2;
+  
+  .part-block {
+    background: #FFA726;
+    color: white;
+    box-shadow: 0 6px 0 darken(#FFA726, 15%);
+  }
 
+  .operator {
+    font-size: 30px;
+    color: #90A4AE;
+    font-weight: 900;
+  }
+
+  .input-block {
+    background: #FFFFFF;
+    color: #37474F;
+    border: 4px solid #CFD8DC;
+    box-shadow: 0 6px 0 #B0BEC5;
+    cursor: pointer;
+
+    .placeholder {
+      color: #ECEFF1;
+    }
+
+    /* 激活状态 */
+    &.active {
+      border-color: #42A5F5;
+      box-shadow: 0 6px 0 rgba(66, 165, 245, 0.3);
+      animation: pulse 2s infinite;
+    }
+
+    /* 错误状态 */
+    &.error {
+      background: #FFEBEE;
+      border-color: #FF5252;
+      color: #FF5252;
+      animation: shake 0.4s;
+    }
+
+    /* 正确状态 */
+    &.success {
+      background: #E8F5E9;
+      border-color: #66BB6A;
+      color: #43A047;
+      transform: scale(1.1);
+    }
+  }
+}
+
+@keyframes shake {
+  10%, 90% {
+    transform: translate3d(-1px, 0, 0);
+  }
+
+  20%, 80% {
+    transform: translate3d(2px, 0, 0);
+  }
+
+  30%, 50%, 70% {
+    transform: translate3d(-4px, 0, 0);
+  }
+
+  40%, 60% {
+    transform: translate3d(4px, 0, 0);
+  }
+}
+</style>
+
+/*
 .tree {
   display: flex;
   flex-direction: column;
@@ -237,21 +370,4 @@ input {
   border-color: red;
   
 }
-@keyframes shake {
-  10%, 90% {
-    transform: translate3d(-1px, 0, 0);
-  }
-
-  20%, 80% {
-    transform: translate3d(2px, 0, 0);
-  }
-
-  30%, 50%, 70% {
-    transform: translate3d(-4px, 0, 0);
-  }
-
-  40%, 60% {
-    transform: translate3d(4px, 0, 0);
-  }
-}
-</style>
+*/

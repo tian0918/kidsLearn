@@ -5,14 +5,14 @@ import { RouterLink, RouterView } from 'vue-router'
 
 <template>
   <RouterView />
-  <header>
+  <!-- <header>
     <div class="wrapper">
       <nav>
         <RouterLink to="/">Home</RouterLink>
         <RouterLink to="/setting">设置</RouterLink>
       </nav>
     </div>
-  </header>
+  </header> -->
 
   
 </template>

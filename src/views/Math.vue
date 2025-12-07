@@ -2,11 +2,13 @@
 import { generateQuestions } from '@/utlits/question';
 import QuestionTree from '@/components/QuestionTree.vue';
 import { ref, onMounted } from 'vue';
+import { useDB } from '@/hooks/useDB';
 const questionList = ref(generateQuestions());
 const currentIndex = ref(0)
 const addNew = async (record) => { 
   delete record.hide;
   delete record.id;
+  addToIndexDB(record)
   nextQuestion()
 }
 const nextQuestion = () => { 
@@ -15,6 +17,16 @@ const nextQuestion = () => {
   // questionList.value.push(...generateQuestions());
 }
 };
+const { initDB, addRecord, getAllRecords } = useDB();
+// onMounted(async() => { 
+//   await initDB();
+//   const allList = await getAllRecords();
+// })
+const addToIndexDB = async(record) => {
+ await initDB()
+ await addRecord('math',record);
+
+}
 </script>
 <template>
     <div class="game-container">

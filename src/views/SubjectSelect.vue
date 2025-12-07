@@ -77,14 +77,14 @@ const selectSubject = (item) => {
   // 简单的点击反馈震动
   if (navigator.vibrate) navigator.vibrate(50);
   
-  console.log(`选择了: ${item.title}`);
+  console.log(`选择了: ${item.type}`);
   // alert(`准备进入 ${item.title} 啦！🚀`);
-  if(item.type === 'math') {
-    router.push('math')
-    return;
-  }
+  if(item.type == 'math') {
+    router.push('/math')
+    // return;
+  }else{
   router.push({ name: item.route, params: { mode: item.type} })
-  
+  }
 };
 </script>
 

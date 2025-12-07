@@ -30,6 +30,7 @@ const addToIndexDB = async(record) => {
 </script>
 <template>
     <div class="game-container">
+        
         <header class="header">
             <div class="progress-pill">第 {{ currentIndex + 1 }}/{{ questionList.length }} 题</div>
         </header>
@@ -41,7 +42,7 @@ const addToIndexDB = async(record) => {
 .game-container {
     width: 100vw;
     height: 100vh;
-    background-color: #FFF9C4;
+    background-color: #FFFDF5;
     display: flex;
     flex-direction: column;
     font-family: 'Nunito', 'Rounded Mplus 1c', sans-serif;

@@ -1,23 +1,14 @@
 <template>
   <div class="tree-container">
-
+   
     <!-- SVG 连线层 -->
     <svg ref="svgRef" class="svg-layer">
       <line ref="lineLeft" class="link"></line>
       <line ref="lineRight" class="link"></line>
     </svg>
-    <!-- <svg class="connections" viewBox="0 0 300 200">
-        
-        <line x1="150" y1="50" x2="60" y2="150" stroke="#B0BEC5" stroke-width="8" stroke-linecap="round" />
-        
-        <line x1="150" y1="50" x2="240" y2="150" stroke="#B0BEC5" stroke-width="8" stroke-linecap="round" />
-      </svg> -->
-    <!-- <div class="node top-node">
-        <div class="block total-block animate-drop">
-          {{ totalNum }}
-        </div>
-      </div> -->
+
     <div class="tree">
+       
       <!-- 根节点 -->
       <div class="node root" ref="rootRef">
         <input class="input-block" v-model="rootValue" disabled />
@@ -26,29 +17,48 @@
       <!-- 子节点 + 操作符 -->
       <div class="children-row">
         <div class="node child" ref="leftRef">
-          <input class="input-block shake" v-model="leftValue" @change="handleLeftChange" />
+          <input disabled class="input-block shake" v-model="leftValue" @change="handleLeftChange" />
         </div>
 
         <div class="node op">
           +
-          <!-- <input v-model="operator" /> -->
         </div>
 
         <div class="node child " ref="rightRef">
-          <input class="input-block" v-model="rightValue" @change="handleRightChange" />
+          <input disabled class="input-block" v-model="rightValue" @change="handleRightChange" />
         </div>
       </div>
     </div>
 
   </div>
-  <!-- <div class="keypad-area">
-      <div class="keypad-grid">
-        <button v-for="n in 9" :key="n" @click="inputNum(n)" class="key-btn">{{ n }}</button>
-        <button @click="clearNum" class="key-btn action-btn">❌</button>
-        <button @click="inputNum(0)" class="key-btn">0</button>
-        <button @click="checkAnswer" class="key-btn confirm-btn">OK</button>
-      </div>
-    </div> -->
+    <div class="w-full max-w-sm grid grid-cols-3 gap-2 md:gap-4 mb-2 md:mb-4 flex-1 content-center p-2">
+      <button v-for="num in [1, 2, 3, 4, 5, 6, 7, 8, 9]"
+        :key="num"
+        @click="userInput(num)"
+        class="bg-gray-50 hover:bg-gray-100 active:bg-gray-200 text-2xl md:text-3xl font-black py-2 md:py-4 rounded-xl md:rounded-2xl shadow-sm border-b-4 border-gray-200 active:border-b-0 active:translate-y-1 transition-all text-gray-700"
+      >
+    {{num}}</button>
+    <button
+    class="bg-rose-100 hover:bg-rose-200 text-rose-500 text-lg md:text-xl font-black py-2 md:py-3 rounded-xl md:rounded-2xl shadow-sm border-b-4 border-rose-200 active:border-b-0 active:translate-y-1 transition-all"
+    @click="userInputPlace == 'left' ? leftValue = '' : rightValue = ''"
+            >
+              CLR
+            </button>
+            <button
+              
+              class="bg-gray-50 hover:bg-gray-100 active:bg-gray-200 text-2xl md:text-3xl font-black py-2 md:py-3 rounded-xl md:rounded-2xl shadow-sm border-b-4 border-gray-200 active:border-b-0 active:translate-y-1 transition-all text-gray-700"
+              @click="userInput(0)"
+            >
+              0
+            </button>
+             <button
+             
+              class="bg-green-400 hover:bg-green-500 text-white text-xl md:text-2xl font-black py-2 md:py-3 rounded-xl md:rounded-2xl shadow-md border-b-4 border-green-600 active:border-b-0 active:translate-y-1 transition-all"
+              @click="calResult"
+            >
+              GO
+            </button>
+    </div>
 </template>
 
 
@@ -62,9 +72,8 @@ const item = computed(() => props.question)
 
 const rootValue = ref(item.value.result);
 const leftValue = ref(Math.random() > 0.5 ? item.value.left : '');
-const rightValue = ref(leftValue.value == "" ? item.value.right : '');;
-const operator = ref("+");
-
+const rightValue = ref(leftValue.value == "" ? item.value.right : '');
+const userInputPlace = leftValue.value == "" ? 'left' : 'right';
 
 // DOM 引用
 const rootRef = ref(null);
@@ -129,15 +138,7 @@ onMounted(() => {
 onBeforeUnmount(() => {
   window.removeEventListener("resize", updateLines);
 });
-const inputNum = (num) => {
-  // console.log(String(leftValue.value) += String(num));
-  // leftValue.value = 
-  // leftValue.value = num
-  // if (isCorrect.value) return; // 答对后锁定
-  // if (userAnswer.value.length >= 2) return; // 最多输入2位
-  // userAnswer.value += num;
-  // isError.value = false;
-};
+
 const handleLeftChange = (e) => {
   const currentResult = Number(rightValue.value) + Number(e.target.value);
   calculatorResult(currentResult, 'left')
@@ -172,7 +173,41 @@ const calculatorResult = (result, shakeNode) => {
     })
   }
 };
+const userInput = (num) => { 
+  if (userInputPlace == 'left') {
+    leftValue.value += String(num)
+  } else { 
+    rightValue.value += String(num)
+  }
+};
+const calResult = () => { 
+  let result = Number(leftValue.value) + Number(rightValue.value);
+  let shakeNode = userInputPlace;
+  const question = (({ id, ...rest }) => rest)(item.value);
+  let recordObj = { question: JSON.stringify(question) }
+  recordObj.updateTime = Date.now();
+  let answer = {
+    place: shakeNode,
+    value: shakeNode == 'left' ? leftValue.value : rightValue.value
+  };
+  recordObj['answer'] = JSON.stringify(answer)
+  if (result === Number(item.value.result)) {
+    recordObj['correct'] = true
+    addShakeAnimation(shakeNode == 'left' ? leftRef.value : rightRef.value,'success').then(res => {
+      // questionStore.addQuestion(recordObj)
+      emit('handleNext', recordObj)
 
+    })
+    // emit('handleNext', recordObj)
+  } else {
+    recordObj['correct'] = false;
+    addShakeAnimation(shakeNode == 'left' ? leftRef.value : rightRef.value,'error').then(res => {
+      // questionStore.addQuestion(recordObj)
+      emit('handleNext', recordObj)
+
+    })
+  }
+};
 const addShakeAnimation = (element,status) => {
   console.log(element)
  
@@ -199,6 +234,7 @@ const addShakeAnimation = (element,status) => {
   max-width: 300px;
   margin: auto;
   position: relative;
+  flex: 1;
 }
 
 .tree {
@@ -206,6 +242,7 @@ const addShakeAnimation = (element,status) => {
   flex-direction: column;
   align-items: center;
   gap: 80px;
+  top: 100px;
 }
 
 .children-row {
@@ -238,24 +275,6 @@ input {
   color: #90A4AE;
   font-weight: 900;
 }
-
-/* .node input:focus {
-  outline: none;
-  border-color: red;
-  
-} */
-/* .node input {
-  outline: none;
-  border: none;
-
-  width: 100%;
-  height: 100%;
-
-  font-size: 24px;
-  text-align: center;
-  
-} */
-
 /* SVG 连线层 */
 .svg-layer {
   position: absolute;

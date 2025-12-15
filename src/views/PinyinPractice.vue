@@ -1,5 +1,10 @@
 <template>
   <div class="flex flex-col h-screen overflow-hidden">
+    <div class="flex items-center justify-between p-3 md:p-4 bg-sky-400 shadow-md z-10">
+    <button @click="router.replace('/')">🏠</button>
+    <h2 class="text-xl md:text-2xl font-bold text-white drop-shadow-md">拼音王国</h2>
+    <div class="w-10"></div>
+  </div>
     <div className="flex justify-center gap-2 p-3 bg-amber-50 overflow-x-auto">
       <button v-for="cat in Object.values(PinyinCategory)" :key="cat" @click="setPinyinTab(cat)"
         class="px-3 py-1.5 md:px-4 md:py-2 rounded-full font-bold text-xs md:text-sm whitespace-nowrap transition-all"

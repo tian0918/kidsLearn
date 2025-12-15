@@ -1,7 +1,7 @@
 <template>
 <div class="flex flex-col h-screen overflow-hidden bg-sky-50">
   <div class="flex items-center justify-between p-3 md:p-4 bg-sky-400 shadow-md z-10">
-    <button @click="router.go(-1)">🏠</button>
+    <button @click="router.replace('/')">🏠</button>
     <h2 class="text-xl md:text-2xl font-bold text-white drop-shadow-md">Alphabet</h2>
     <div class="w-10"></div>
   </div>

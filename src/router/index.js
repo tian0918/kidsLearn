@@ -20,14 +20,14 @@ const router = createRouter({
       component:() => import('../views/SubjectSelect.vue')
     },
     {
-      path:'/learnEnglish/:mode',
-      name:'learnEnglish',
-      component:() => import('../views/EnglishPractice.vue')
+      path:'/alphabet',
+      name:'alphabet',
+      component:() => import('../views/Alphabet.vue')
     },
     {
-      path:'/pinyin/:mode',
+      path:'/pinyin',
       name:'pinyin',
-      component:() => import('../views/EnglishPractice.vue')
+      component:() => import('../views/PinyinPractice.vue')
     },
     {
       path:'/math',

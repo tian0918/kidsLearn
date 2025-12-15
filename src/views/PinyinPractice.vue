@@ -1,12 +1,47 @@
 <template>
-  <!-- 练习拼音 ā -->
-  <LanguagePractice 
-    mode="pinyin" 
-    char="ā á" 
-    title="韵母 a 练习" 
-  />
+  <div class="flex flex-col h-screen overflow-hidden">
+    <div className="flex justify-center gap-2 p-3 bg-amber-50 overflow-x-auto">
+      <button v-for="cat in Object.values(PinyinCategory)" :key="cat" @click="setPinyinTab(cat)"
+        class="px-3 py-1.5 md:px-4 md:py-2 rounded-full font-bold text-xs md:text-sm whitespace-nowrap transition-all"
+        :class="{ 'bg-amber-500 text-white shadow-lg scale-105': pinyinTab == cat, 'bg-white text-amber-500 hover:bg-amber-100': pinyinTab != cat }">
+        {{ cat }}
+      </button>
+
+    </div>
+    <div class="flex-1 overflow-y-auto p-4 bg-amber-50">
+      <div class="grid grid-cols-3 sm:grid-cols-4 md:grid-cols-6 gap-3 md:gap-4 max-w-5xl mx-auto pb-24">
+        <button v-for="(item, idx) in pinyinData[pinyinTab]" :key="item"
+          class="aspect-square flex items-center justify-center rounded-2xl shadow-md text-3xl md:text-4xl font-black text-white hover:scale-105 transition-transform"
+          :class="getColor(idx)"
+          @click="playAudio(item)">
+          {{ item }}
+        </button>
+
+      </div>
+    </div>
+  </div>
 </template>
 
 <script setup>
-import LanguagePractice from '../components/LanguagePractice.vue';
+import { ref } from 'vue';
+import { PinyinCategory } from '../types';
+import { PINYIN_DATA } from '@/constant';
+const pinyinData = PINYIN_DATA;
+
+const colors = [
+  'bg-rose-400 border-rose-500',
+  'bg-sky-400 border-sky-500',
+  'bg-lime-400 border-lime-500',
+  'bg-amber-400 border-amber-500',
+  'bg-violet-400 border-violet-500'
+];
+const getColor = (index) => colors[index % colors.length];
+const pinyinTab = ref(PinyinCategory.SHENGMU);
+function setPinyinTab(cat) {
+
+  pinyinTab.value = cat;
+};
+const playAudio = (item) => { 
+ 
+};
 </script>

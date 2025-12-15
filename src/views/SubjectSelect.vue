@@ -57,11 +57,11 @@ const subjects = ref([
   },
   { 
     id: 2, 
-    type: 'english', 
+    type: 'alphabet', 
     title: '神奇字母', 
     desc: 'ABC 唱起来，单词记心间', 
     emoji: '🔠',
-    route: 'learnEnglish' 
+    route: 'alphabet' 
   },
   { 
     id: 3, 
@@ -76,15 +76,7 @@ const subjects = ref([
 const selectSubject = (item) => {
   // 简单的点击反馈震动
   if (navigator.vibrate) navigator.vibrate(50);
-  
-  console.log(`选择了: ${item.type}`);
-  // alert(`准备进入 ${item.title} 啦！🚀`);
-  if(item.type == 'math') {
-    router.push('/math')
-    // return;
-  }else{
-  router.push({ name: item.route, params: { mode: item.type} })
-  }
+  router.push(item.route)
 };
 </script>
 
@@ -208,7 +200,7 @@ const selectSubject = (item) => {
   box-shadow: 0 10px 20px rgba(255, 94, 98, 0.3);
 }
 
-.theme-english {
+.theme-alphabet {
   background: linear-gradient(135deg, #4FACFE 0%, #00F2FE 100%);
   box-shadow: 0 10px 20px rgba(79, 172, 254, 0.3);
 }

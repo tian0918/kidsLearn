@@ -29,6 +29,7 @@
 
 <script setup>
 import { ref } from 'vue';
+import router from '@/router';
 import { PinyinCategory } from '../types';
 import { PINYIN_DATA } from '@/constant';
 const pinyinData = PINYIN_DATA;
@@ -46,7 +47,14 @@ function setPinyinTab(cat) {
 
   pinyinTab.value = cat;
 };
-const playAudio = (item) => { 
- 
+const playAudio = async(item) => { 
+  try {
+    const module = await import(`@/assets/audio/${item}.mp3`);
+    const audio = new Audio(module.default);
+    audio.play();
+  } catch (err) { 
+    console.log(`未找到${item}.mp3`);
+    
+  }
 };
 </script>

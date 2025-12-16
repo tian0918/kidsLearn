@@ -19,8 +19,9 @@
         <!--Game Area-->
         <div
             class="flex-1 w-full flex flex-col items-center bg-white rounded-3xl md:rounded-4xl shadow-xl p-3 md:p-8 border-b-8 relative overflow-hidden transition-colors duration-500">
-            <MiniCartoonTimer ref="timerRef" />
-            <div class="flex flex-col items-center w-full mb-4 md:mb-8 mt-2 md:mt-0">
+           
+            <div class="flex flex-col gap-5 items-center w-full mb-4 md:mb-8 mt-2 md:mt-0">
+                 <MiniCartoonTimer ref="timerRef" />
                 <div
                     class="flex items-start justify-center gap-1 md:gap-4 text-5xl md:text-8xl font-black text-gray-800">
                     <!-- Number 1  -->
@@ -61,11 +62,12 @@
       theme="pink"
       confirmText="继续!"
       cancelText="休息一下🥱"
+      @cancel="router.go(-1)"
       @confirm="addMoreQuestion"
     >
       <div style="display: flex; align-items: center; flex-direction: column;">
        
-        <p>今天已经做了{{questionList.length}}到题了，还要继续吗？</p>
+        <p>今天已经做了{{questionList.length}}到题了，很棒啦！还要继续吗？</p>
       </div>
     </CartoonDialog>
 </template>
@@ -75,11 +77,15 @@ import CartoonDialog from '@/components/CartoonDialog.vue';
 import MiniCartoonTimer from '@/components/MiniCartoonTime.vue';
 import BalloonAnimation from '@/components/BalloonAnimation.vue';
 import router from '@/router';
-import { ref, computed, useTemplateRef, onUnmounted } from 'vue';
+import { ref, computed, useTemplateRef, onUnmounted, onMounted } from 'vue';
 import { useDB } from '@/hooks/useDB';
 import { generateQuestions } from '@/utlits/question';
 onUnmounted(() => { 
     timerRef.value?.reset();
+})
+import { speak } from '@/utlits/audio';
+onMounted(() => {
+    speak()
 })
 const timerRef = ref(null)
 const showDialog = ref(false);
@@ -87,6 +93,7 @@ const questionList = ref(generateQuestions());
 const score = ref(0);
 const curIndex = ref(0)
 const problem = ref(questionList.value[curIndex.value])
+
 const streak = ref(0);
 const message = ref({});
 const userAnswer = ref("");
@@ -120,45 +127,52 @@ const getResult = () => {
         score.value += 1;
         streak.value += 1;
         message.value.type = 'success'
+        speak("Correct! Good job!")
         addShakeAnimation('success').then(res => {
+            // const lastTimeMs =  timerRef.value?.reset();
+            addToIndexDB()
             getNextQuestion()
     })
     } else {
+        speak("Oops, try again.");
         message.value.type = 'error'
         shakePlace.value = hiddenPlace.value;
         streak.value = 0;
-        addShakeAnimation('error').then(res => {
-            getNextQuestion()
-    })
+        problem.value.wrongTimes += 1;
+        addShakeAnimation('error').then(res => { 
+            userAnswer.value = '';
+        })
     }
 };
 const { initDB, addRecord, getAllRecords } = useDB();
-const addToIndexDB = async (record) => {
-    await initDB();
-    await addRecord('math', record);
-
-};
-const getNextQuestion = async() => { 
-    // timerRef.value?.reset();
-    // console.log('1111',timerRef.value?.reset());
-    
-    const lastTimeMs = timerRef.value?.reset();
-    delete problem.id;
+const addToIndexDB = async () => {
+    delete problem.value.id;
+    const lastTimeMs =  timerRef.value?.reset();
     let obj = { ...problem.value }
     obj.useAnswer = userAnswer.value;
     obj.inputPlace = hiddenPlace.value;
     if (lastTimeMs != undefined) { 
         obj.time = lastTimeMs;
     }
-    console.log(obj);
-    addToIndexDB (obj)
+    // addToIndexDB (obj)
+    await initDB();
+    await addRecord('math', obj);
+
+};
+const getNextQuestion = async() => { 
     hiddenPlace.value = getRandomLRR()
     userAnswer.value = ""
     curIndex.value += 1;
-    if (curIndex.value > questionList.value.length) { 
+    console.log("当前INDEX",curIndex.value);
+    console.log("数组长度",questionList.value.length);
+    
+    if (curIndex.value == questionList.value.length) { 
         showDialog.value = true;
+        speak(`今天已经做了${questionList.value.length }道题了，很棒啦！还要继续吗？`,'zh-CN')
+    }else{
+
+        problem.value = questionList.value[curIndex.value]
     }
-    problem.value = questionList.value[curIndex.value]
 };
 const addMoreQuestion = () => { 
    
@@ -167,18 +181,18 @@ const addMoreQuestion = () => {
 };
 const clearInput = () => { 
     userAnswer.value = '';
-    console.log("清除输入");
 };
 const getInput = (num) => { 
-    userAnswer.value += String(num)
-    console.log(`当前输入${num}`);
-    
+   
+    userAnswer.value += String(num) 
+    speak(userAnswer.value)
+       
 };
 const addShakeAnimation = (status) => {
     return new Promise((resolve) => {
         let curRef = hiddenPlace.value == 'left' ? leftRef : hiddenPlace.value == 'right' ? rightRef : resultRef;
     curRef.value.classList.add(`${status}`);
-    curRef.value.addEventListener('animationend',
+        curRef.value.addEventListener('animationend',
       () => {
         curRef.value.classList.remove(`${status}`);
         resolve()
@@ -187,6 +201,8 @@ const addShakeAnimation = (status) => {
         once: true
       }
     )
+    
+    
   })
 };
 </script>
@@ -216,74 +232,13 @@ div {
     border-color: #66BB6A;
     color: #43A047;
     animation: success 0.4s;
-    /* transform: scale(1.1); */
+    
   }
+}
+@keyframes success {
+  /* from { transform: translateY(-50px); opacity: 0; }
+  to { transform: translateY(0); opacity: 1; } */
 }
 </style>
 
 
-<!-- <script setup>
-import { generateQuestions } from '@/utlits/question';
-import QuestionTree from '@/components/QuestionTree.vue';
-import { ref, onMounted } from 'vue';
-import { useDB } from '@/hooks/useDB';
-import router from '@/router';
-const questionList = ref(generateQuestions());
-const currentIndex = ref(0);
-const addNew = async (record) => {
-    delete record.hide;
-    delete record.id;
-    addToIndexDB(record);
-    nextQuestion();
-};
-const nextQuestion = () => {
-    currentIndex.value++;
-    if (currentIndex.value >= questionList.value.length - 1) {
-        // questionList.value.push(...generateQuestions());
-    }
-};
-const { initDB, addRecord, getAllRecords } = useDB();
-const addToIndexDB = async (record) => {
-    await initDB();
-    await addRecord('math', record);
-
-};
-</script>
-<template>
-    <div class="flex flex-col gap-4  h-screen overflow-hidden">
-        <div class="flex items-center justify-between p-3 md:p-4 bg-sky-400 shadow-md z-10">
-            <button @click="router.replace('/')">🏠</button>
-            <h2 class="text-xl md:text-2xl font-bold text-white drop-shadow-md">第 {{ currentIndex + 1 }}/{{ questionList.length }} 题</h2>
-            <div class="w-10"></div>
-        </div>
-    <QuestionTree   :key="currentIndex" :question="questionList[currentIndex]" @handle-next="addNew">
-    </QuestionTree>
-    </div>
-</template>
-<style scoped>
-    .game-container {
-        width: 100vw;
-        height: 100vh;
-        background-color: #FFFDF5;
-        display: flex;
-        flex-direction: column;
-        font-family: 'Nunito', 'Rounded Mplus 1c', sans-serif;
-        overflow: hidden;
-    }
-
-    .header {
-        padding: 15px 20px;
-        display: flex;
-        justify-content: space-between;
-
-        .progress-pill,
-        .score-pill {
-            background: rgba(255, 255, 255, 0.8);
-            padding: 8px 16px;
-            border-radius: 20px;
-            font-weight: bold;
-            color: #5D4037;
-            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.05);
-        }
-    }
-</style> -->

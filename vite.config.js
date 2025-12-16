@@ -10,9 +10,12 @@ export default defineConfig({
   plugins: [
     vue(),
     vueJsx(),
-    vueDevTools(),
+    // vueDevTools(),
     tailwindcss(),
   ],
+  server: {
+    host:'0.0.0.0',
+  },
   resolve: {
     alias: {
       '@': fileURLToPath(new URL('./src', import.meta.url))

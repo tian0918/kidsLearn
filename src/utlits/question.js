@@ -2,14 +2,14 @@
 /*
 mode:easy hard and only control operator
 */
-export const generateQuestions = (count = 30, max = 20, mode = 'easy') => {
+export const generateQuestions = (count = 30, max = 20,min=0, mode = 'easy') => {
   const questions = [];
   for (let i = 1; i <= count; i++) {
-    let a = Math.floor(Math.random() * (max - 10 + 1)) + 10;
+    let a = Math.floor(Math.random() * (max - min + 1)) + min;
     // const op = Math.random() > 0.5 ? '+' : '-' 
     const op = '+';
     let b = op === '+'
-      ? Math.floor(Math.random() * (max - 10 + 1)) + 10
+      ? Math.floor(Math.random() * (max - min + 1)) + min
       : Math.floor(Math.random() * (a - 10 + 1)) + 10; // 保证不负数
     const result = op === '+' ? a + b : a - b;
 

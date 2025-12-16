@@ -31,7 +31,7 @@
     </div>
 
   </div>
-    <div class="w-full max-w-sm grid grid-cols-3 gap-2 md:gap-4 mb-2 md:mb-4 flex-1 content-center p-2">
+    <div class="w-full grid grid-cols-3 gap-2 md:gap-4 mb-2 md:mb-4 flex-1 content-center p-2">
       <button v-for="num in [1, 2, 3, 4, 5, 6, 7, 8, 9]"
         :key="num"
         @click="userInput(num)"
@@ -63,7 +63,7 @@
 
 
 <script setup>
-import { ref, onMounted, onBeforeUnmount, defineProps, computed } from "vue";
+import { ref, onMounted, onBeforeUnmount, computed } from "vue";
 
 
 const emit = defineEmits(['handleNext'])
@@ -209,8 +209,8 @@ const calResult = () => {
   }
 };
 const addShakeAnimation = (element,status) => {
-  console.log(element)
- 
+
+
   return new Promise((resolve) => {
     const el = element.querySelector('input');
     el.classList.add(`${status}`);

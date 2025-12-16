@@ -40,7 +40,7 @@ const getColor = (index) => colors[index % colors.length];
 const letter = ref('')
 const { speak } = useSpeechSynthesis(letter, {
   lang: 'en-US',
-  rate: 0.5
+  rate: 1
 });
 
 const playAudio = (item) => { 

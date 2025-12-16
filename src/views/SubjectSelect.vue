@@ -76,7 +76,9 @@ const subjects = ref([
 const selectSubject = (item) => {
   // 简单的点击反馈震动
   if (navigator.vibrate) navigator.vibrate(50);
-  router.push(item.route)
+  console.log(item);
+  
+  router.push(`/${item.route}`)
 };
 </script>
 

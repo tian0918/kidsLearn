@@ -1,5 +1,5 @@
 <template>
-    <div class="flex h-screen w-screen flex-col items-center  gap-2.5 p-3 md:p-4 bg-sky-400 shadow-md z-10">
+    <div class="flex h-dvh w-screen flex-col items-center gap-2.5 p-3 md:p-4 bg-sky-400 shadow-md z-10">
         <div class="flex w-full justify-between items-center mb-2 md:mb-4 px-1">
             <button @click="router.replace('/')">🏠</button>
             <div class="flex gap-2">

@@ -1,6 +1,6 @@
 <script setup>
 import { RouterLink, RouterView } from 'vue-router'
-
+usePageNoZoom();
 </script>
 
 <template>

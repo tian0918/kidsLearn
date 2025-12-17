@@ -88,7 +88,8 @@ const selectSubject = (item) => {
 
 .select-page {
   width: 100vw;
-  min-height: 100vh;
+  /* min-height: 100vh; */
+  height: 100dvh;
   background-color: #F0F4F8;
   position: relative;
   overflow: hidden;

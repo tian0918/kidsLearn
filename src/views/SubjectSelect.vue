@@ -5,7 +5,7 @@
     <div class="blob blob-2"></div>
 
     <!-- 顶部欢迎语 -->
-    <header class="header">
+    <header class="header" @click="showSidebar">
       <div class="avatar">🐼</div>
       <div class="greeting">
         <h2>嗨，小朋友！</h2>
@@ -38,13 +38,24 @@
         <div class="arrow-btn">GO</div>
       </div>
     </main>
+    
   </div>
+  <SiderBar v-model:show="isShowSidebar">
+    
+     <header class="header">
+      <div class="avatar">🐼</div>
+      <div class="greeting">
+        <h2>嗨，小朋友！</h2>
+      </div>
+    </header>
+  </SiderBar>
 </template>
 
 <script setup>
 import router from '@/router';
 import { ref } from 'vue';
-
+import SiderBar from '@/components/SiderBar.vue';
+const isShowSidebar = ref(false)
 // 科目数据配置
 const subjects = ref([
   { 
@@ -72,7 +83,10 @@ const subjects = ref([
     route: 'math' 
   }
 ]);
-
+const showSidebar = () => { 
+  console.log("Hi!")
+  isShowSidebar.value = true
+};
 const selectSubject = (item) => {
   // 简单的点击反馈震动
   if (navigator.vibrate) navigator.vibrate(50);

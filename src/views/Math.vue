@@ -4,7 +4,7 @@
             <button @click="router.replace('/')">🏠</button>
             <div class="flex gap-2">
                 <div v-if="streak > 1"
-                    class="bg-orange-100 px-3 py-1 rounded-full text-orange-600 font-bold text-xs md:text-sm shadow-sm animate-pulse border border-orange-200">
+                    class="streak">
                     🔥{{ streak }}
                 </div>
                 <!-- <div class="bg-white/60 px-3 py-1 rounded-full backdrop-blur-sm text-gray-500 font-bold text-xs md:text-sm shadow-sm">
@@ -12,7 +12,7 @@
           </div> -->
             </div>
             <div
-                class="bg-yellow-400 text-white px-3 py-1 md:px-4 md:py-2 rounded-full font-black shadow-md border-2 border-yellow-500 flex items-center gap-1 text-sm md:text-base">
+                class="star">
                 <span>⭐</span> <span>{{score}}</span>
             </div>
         </div>

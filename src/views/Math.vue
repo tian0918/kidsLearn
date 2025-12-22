@@ -12,8 +12,9 @@
           </div> -->
             </div>
             <div
-                class="star">
-                <span>⭐</span> <span>{{score}}</span>
+                class="star" @click="router.push('mathHistory')">
+                <!-- <span>⭐</span> <span>{{score}}</span> -->
+                答题历史
             </div>
         </div>
         <!--Game Area-->
@@ -138,7 +139,7 @@ const getResult = () => {
         message.value.type = 'error'
         shakePlace.value = hiddenPlace.value;
         streak.value = 0;
-        problem.value.wrongTimes += 1;
+       problem.value.wrongTimes += 1;
         addShakeAnimation('error').then(res => { 
             userAnswer.value = '';
         })
@@ -174,9 +175,11 @@ const getNextQuestion = async() => {
         problem.value = questionList.value[curIndex.value]
     }
 };
+const curMax = ref(10)
 const addMoreQuestion = () => { 
-   
-    questionList.value.push(...generateQuestions(30, 20))
+    let min = curMax.value
+    let max = curMax.value += 10;
+    questionList.value.push(...generateQuestions(30, max, min))
     showDialog.value = false
 };
 const clearInput = () => { 

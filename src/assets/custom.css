@@ -6,3 +6,6 @@
 .star {
   @apply bg-yellow-400 text-white px-3 py-1 md:px-4 md:py-2 rounded-full font-black shadow-md border-2 border-yellow-500 flex items-center gap-1 text-sm md:text-base
 }
+.error {
+  @apply bg-orange-100 text-red-500 px-3 py-1 md:px-4 md:py-2 rounded-full font-black shadow-md border-2 border-orange-200 flex items-center gap-1 text-sm md:text-base
+}

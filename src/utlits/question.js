@@ -2,7 +2,7 @@
 /*
 mode:easy hard and only control operator
 */
-export const generateQuestions = (count = 30, max = 10,min=0, mode = 'easy') => {
+export const generateQuestions = (count = 30, max = 20,min=0, mode = 'easy') => {
   const questions = [];
   for (let i = 1; i <= count; i++) {
     let a = Math.floor(Math.random() * (max - min + 1)) + min;
@@ -23,7 +23,7 @@ export const generateQuestions = (count = 30, max = 10,min=0, mode = 'easy') => 
     //   hide = [Math.floor(Math.random() * 4)]; // easy: 挖1个
     // }
 
-    questions.push({ id: i, left: a, op, right: b, result });
+    questions.push({ id: i, left: a, op, right: b, result,wrongTimes:0 });
   }
   return questions;
 };

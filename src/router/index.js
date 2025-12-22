@@ -36,9 +36,7 @@ const router = createRouter({
     {
       path: '/setting',
       name: 'setting',
-      // route level code-splitting
-      // this generates a separate chunk (About.[hash].js) for this route
-      // which is lazy-loaded when the route is visited.
+
       component: () => import('../views/Setting.vue'),
     },
     {
@@ -50,6 +48,11 @@ const router = createRouter({
       path: '/login',
       name: 'login',
       component: () => import('../views/Login.vue')
+    },
+    {
+      path: '/mathHistory',
+      name: 'mathHistory',
+      component: () => import('../views/MaxthHistory.vue')
     }
   ],
 });

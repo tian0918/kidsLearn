@@ -4,7 +4,7 @@
             <button @click="router.replace('/')">🏠</button>
             <div class="flex gap-2">
                 <div v-if="streak > 1"
-                    class="bg-orange-100 px-3 py-1 rounded-full text-orange-600 font-bold text-xs md:text-sm shadow-sm animate-pulse border border-orange-200">
+                    class="streak">
                     🔥{{ streak }}
                 </div>
                 <!-- <div class="bg-white/60 px-3 py-1 rounded-full backdrop-blur-sm text-gray-500 font-bold text-xs md:text-sm shadow-sm">
@@ -12,8 +12,9 @@
           </div> -->
             </div>
             <div
-                class="bg-yellow-400 text-white px-3 py-1 md:px-4 md:py-2 rounded-full font-black shadow-md border-2 border-yellow-500 flex items-center gap-1 text-sm md:text-base">
-                <span>⭐</span> <span>{{score}}</span>
+                class="star" @click="router.push('mathHistory')">
+                <!-- <span>⭐</span> <span>{{score}}</span> -->
+                答题历史
             </div>
         </div>
         <!--Game Area-->
@@ -138,7 +139,7 @@ const getResult = () => {
         message.value.type = 'error'
         shakePlace.value = hiddenPlace.value;
         streak.value = 0;
-        problem.value.wrongTimes += 1;
+       problem.value.wrongTimes += 1;
         addShakeAnimation('error').then(res => { 
             userAnswer.value = '';
         })
@@ -174,9 +175,11 @@ const getNextQuestion = async() => {
         problem.value = questionList.value[curIndex.value]
     }
 };
+const curMax = ref(10)
 const addMoreQuestion = () => { 
-   
-    questionList.value.push(...generateQuestions(30, 20))
+    let min = curMax.value
+    let max = curMax.value += 10;
+    questionList.value.push(...generateQuestions(30, max, min))
     showDialog.value = false
 };
 const clearInput = () => { 

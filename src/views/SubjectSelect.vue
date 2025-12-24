@@ -81,6 +81,14 @@ const subjects = ref([
     desc: '数字连连看，加减大挑战', 
     emoji: '🧮',
     route: 'math' 
+  },
+  {
+    id: 4,
+    type: 'words',
+    title: '单词',
+    desc: '点点累计',
+    emoji: "🔤",
+    route:'words'
   }
 ]);
 const showSidebar = () => { 

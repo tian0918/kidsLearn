@@ -34,6 +34,16 @@ const router = createRouter({
       component: () => import('../views/Math.vue')
     },
     {
+      path: '/words',
+      name: 'words',
+      component: () => import('../views/Words.vue')
+    },
+    {
+      path: '/worditem/:type',
+      name: 'wordItem',
+      component: () => import("../views/WordItem.vue")
+    },
+    {
       path: '/setting',
       name: 'setting',
 

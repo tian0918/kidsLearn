@@ -1,7 +1,11 @@
 <script setup>
-import { RouterLink, RouterView } from 'vue-router'
+import { RouterView } from 'vue-router'
 import { usePageNoZoom } from './hooks/usePageNoZoom';
-usePageNoZoom();
+import { onMounted } from 'vue';
+
+onMounted(() => { 
+  usePageNoZoom();
+})
 </script>
 
 <template>

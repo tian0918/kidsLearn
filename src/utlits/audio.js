@@ -1,4 +1,13 @@
-
+const getWindowVoives =  () => {
+  
+  const loadVoices = () => {
+    const list = window.speechSynthesis.getVoices();
+    return list
+  };
+  loadVoices();
+  window.speechSynthesis.onvoiceschanged = loadVoices;
+  // console.log(list);
+};
 export const speak = (text,lang = 'en-US') => {
   if (!window.speechSynthesis) return;
 
@@ -11,12 +20,14 @@ export const speak = (text,lang = 'en-US') => {
   utterance.pitch = 1.1; // Slightly higher pitch to sound friendlier
 
   // Try to select a "Google" voice if available as they tend to be higher quality
-  const voices = window.speechSynthesis.getVoices();
-  
-  
+  const voices = getWindowVoives();
+  let zh = localStorage.getItem('zhVoices');
+  let en = localStorage.getItem('enVoices');
+  let cur = lang === 'en-US' ? en : zh;
   const preferredVoice = voices.find(v => 
-    v.lang === lang && (v.name.includes('Google') || v.name.includes('Female'))
+    v.lang === lang && (v.name.includes(cur) || v.voiceURI.includes(cur))
   );
+  console.log(voices);
   
   if (preferredVoice) {
     utterance.voice = preferredVoice;

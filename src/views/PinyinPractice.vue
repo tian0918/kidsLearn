@@ -47,14 +47,26 @@ function setPinyinTab(cat) {
 
   pinyinTab.value = cat;
 };
-const playAudio = async(item) => { 
-  try {
-    const module = await import(`@/assets/audio/${item}.mp3`);
-    const audio = new Audio(module.default);
-    audio.play();
-  } catch (err) { 
-    console.log(`未找到${item}.mp3`);
+//http://du.hanyupinyin.cn/du/pinyin/ing.mp3
+const playAudio = async (item) => { 
+  // if (pinyinTab.value == PinyinCategory.SHENGMU) {
+  //   try {
+  //     const module = await import(`@/assets/audio/${item}.mp3`);
+  //     const audio = new Audio(module.default);
+  //     audio.play();
+  //   } catch (err) {
+  //     console.log(`未找到${item}.mp3`);
+
+  //   }
+  // } else { 
+    if (['ü', 'üe', 'ün'].indexOf(item) != -1) { 
+      item = item.replace('ü','v')
+    }
     
-  }
+  const audio = new Audio(`http://du.hanyupinyin.cn/du/pinyin/${item}.mp3`);
+  audio.volume = 1.0;
+  audio.play()
+  // }
+  
 };
 </script>

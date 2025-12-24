@@ -2,8 +2,26 @@
 import { RouterView } from 'vue-router'
 import { usePageNoZoom } from './hooks/usePageNoZoom';
 import { onMounted } from 'vue';
-
+const getWindowVoives =  () => {
+  
+  const loadVoices = () => {
+    const voices = window.speechSynthesis.getVoices();
+    if(voices.length > 0) {
+      // console.log("----",voices.filter(item => item.lang == 'en-US').find(item => item.name.includes('Google')));
+      
+      let zh = voices.filter(item => item.lang == 'zh-CN')[0].voiceURI;
+      let en = voices.filter(item => item.lang == 'en-US').find(item => item.name.includes('Google')).voiceURI;
+      localStorage.setItem('zhVoices',zh)
+      localStorage.setItem('enVoices',en)
+    }
+    
+  };
+  loadVoices();
+  window.speechSynthesis.onvoiceschanged = loadVoices;
+  // console.log(list);
+};
 onMounted(() => { 
+  getWindowVoives()
   usePageNoZoom();
 })
 </script>

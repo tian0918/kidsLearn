@@ -1,13 +1,11 @@
 import { createRouter, createWebHistory } from 'vue-router';
 
-
 const router = createRouter({
   history: createWebHistory(),
   routes: [
     {
       path: '/',
-      component: () => import('../views/HomeView.vue'), // 直接渲染 Home
-      name: 'home'
+      redirect:'home'
     },
     {
       path: '/home',

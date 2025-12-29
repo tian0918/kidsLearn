@@ -63,6 +63,10 @@ const playAudio = async (item) => {
     if (['ü', 'üe', 'ün'].indexOf(item) != -1) { 
       item = item.replace('ü','v')
     }
+    if(pinyinTab.value == PinyinCategory.ZHENGTI) {
+      item = item + '1'
+    }
+    console.log(pinyinTab,item);
     
   const audio = new Audio(`http://du.hanyupinyin.cn/du/pinyin/${item}.mp3`);
   audio.volume = 1.0;

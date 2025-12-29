@@ -19,6 +19,16 @@ const router = createRouter({
       component:() => import('../views/SubjectSelect.vue')
     },
     {
+      path: '/english',
+      name: 'english',
+      component:() => import('../views/English.vue')
+    },
+    {
+      path: '/chinese',
+      name: 'chinese',
+      component: () => import('../views/Chinese.vue')
+    },
+    {
       path:'/alphabet',
       name:'alphabet',
       component:() => import('../views/Alphabet.vue')

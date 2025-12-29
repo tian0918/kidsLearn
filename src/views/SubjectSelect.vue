@@ -60,19 +60,19 @@ const isShowSidebar = ref(false)
 const subjects = ref([
   { 
     id: 1, 
-    type: 'pinyin', 
-    title: '拼音王国', 
+    type: 'chinese', 
+    title: '中文真好听', 
     desc: '学习 a o e，说话真好听', 
     emoji: '🗣️',
-    route: 'pinyin' 
+    route: 'chinese' 
   },
   { 
     id: 2, 
-    type: 'alphabet', 
+    type: 'english', 
     title: '神奇字母', 
     desc: 'ABC 唱起来，单词记心间', 
     emoji: '🔠',
-    route: 'alphabet' 
+    route: 'english' 
   },
   { 
     id: 3, 
@@ -81,14 +81,6 @@ const subjects = ref([
     desc: '数字连连看，加减大挑战', 
     emoji: '🧮',
     route: 'math' 
-  },
-  {
-    id: 4,
-    type: 'words',
-    title: '单词',
-    desc: '点点累计',
-    emoji: "🔤",
-    route:'words'
   }
 ]);
 const showSidebar = () => { 
@@ -110,7 +102,6 @@ const selectSubject = (item) => {
 
 .select-page {
   width: 100vw;
-  /* min-height: 100vh; */
   height: 100dvh;
   background-color: #F0F4F8;
   position: relative;
@@ -220,12 +211,12 @@ const selectSubject = (item) => {
 }
 
 /* 主题配色 (渐变色) */
-.theme-pinyin {
+.theme-chinese {
   background: linear-gradient(135deg, #FF9966 0%, #FF5E62 100%);
   box-shadow: 0 10px 20px rgba(255, 94, 98, 0.3);
 }
 
-.theme-alphabet {
+.theme-english {
   background: linear-gradient(135deg, #4FACFE 0%, #00F2FE 100%);
   box-shadow: 0 10px 20px rgba(79, 172, 254, 0.3);
 }

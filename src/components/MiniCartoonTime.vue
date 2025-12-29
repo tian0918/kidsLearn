@@ -26,6 +26,8 @@ const startTime = ref(0);
 
 onMounted(() => {
   startTime.value = Date.now();
+  console.log("Timer---",startTime.value);
+  
 });
 const reset = () => {
   const finalTime = elapsed.value;
@@ -77,7 +79,7 @@ const formattedMs = computed(() => {
   
   /* 卡通风格核心：粗边框 + 硬阴影 */
   background-color: #ffffff;
-  border: 3px solid #333;
+  border: 3px solid #E9A5F1;
   border-radius: 50px; /* 胶囊圆角 */
   box-shadow: 4px 4px 0px rgba(0,0,0,0.15); /* 较浅的阴影，不喧宾夺主 */
   

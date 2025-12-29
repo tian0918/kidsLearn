@@ -1,10 +1,9 @@
 <template>
-<div class="flex flex-col h-screen overflow-hidden bg-sky-50">
-  <div class="flex items-center justify-between p-3 md:p-4 bg-sky-400 shadow-md z-10">
-    <button @click="router.replace('/')">🏠</button>
-    <h2 class="text-xl md:text-2xl font-bold text-white drop-shadow-md">Alphabet</h2>
-    <div class="w-10"></div>
-  </div>
+  <Navbar>
+    <template #navTitle>Alphabet</template>
+  </Navbar>
+<div class="pt-[60px] flex flex-col h-screen overflow-hidden bg-sky-50">
+
   <div class="flex-1 overflow-y-auto p-4 md:p-8">
     <div class="grid grid-cols-4 md:grid-cols-5 gap-4 md:gap-6 max-w-5xl mx-auto pb-24">
       <button v-for="(letter,idx) in alphabets"

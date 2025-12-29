@@ -13,5 +13,8 @@
   @apply  grid grid-cols-3 gap-4 p-5  
 }
 .card {
-  @apply bg-amber-200 border-2 px-3 flex-auto  
+  @apply bg-[#FED2E2] cursor-pointer shadow-2xl border-4 border-solid rounded-2xl border-transparent 
+}
+.flex-center {
+  @apply flex items-center justify-center
 }

@@ -3,9 +3,9 @@
     
     <div class="card" v-for="item in wordList" :key="item.en"  @click="playSound(item)">
       <div class="flex flex-col items-center p-1 gap-2">
-        <div class="text-2xl">{{item.zh}}</div>
-        <div class="text-2xl">{{item.en}}</div>
-        <div class="bg-amber-600" >🔈</div>
+        <div class="pt-2.5">{{item.zh}}</div>
+        <div class="">{{item.en}}</div>
+        <div class="pb-2.5"> 🔈</div>
       </div>
       
     </div>
@@ -13,8 +13,8 @@
 </template>
 
 <script setup lang="ts">
-import { ref, watch } from 'vue';
 
+import { ref, watch } from 'vue';
 const props = defineProps({
   list: {
     type: Array,

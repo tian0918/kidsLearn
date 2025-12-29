@@ -6,11 +6,11 @@ const getWindowVoives =  () => {
   
   const loadVoices = () => {
     const voices = window.speechSynthesis.getVoices();
+    console.log("GETVOICES---",voices);
+    
     if(voices.length > 0) {
-      // console.log("----",voices.filter(item => item.lang == 'en-US').find(item => item.name.includes('Google')));
-      
       let zh = voices.filter(item => item.lang == 'zh-CN')[0].voiceURI;
-      let en = voices.filter(item => item.lang == 'en-US').find(item => item.name.includes('Google')).voiceURI;
+      let en = voices.filter(item => item.lang == 'en-US')[0].voiceURI;
       localStorage.setItem('zhVoices',zh)
       localStorage.setItem('enVoices',en)
     }

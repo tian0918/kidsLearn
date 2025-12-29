@@ -1,23 +1,15 @@
 <template>
-    <div class="flex h-dvh w-screen flex-col items-center gap-2.5 p-3 md:p-4 bg-sky-400 shadow-md z-10">
-        <div class="flex w-full justify-between items-center mb-2 md:mb-4 px-1">
-            <button @click="router.replace('/')">🏠</button>
+    <Navbar>
+        <template #navTitle>
             <div class="flex gap-2">
-                <div v-if="streak > 1"
-                    class="streak">
-                    🔥{{ streak }}
-                </div>
-                <!-- <div class="bg-white/60 px-3 py-1 rounded-full backdrop-blur-sm text-gray-500 font-bold text-xs md:text-sm shadow-sm">
-             Level: 0-{mathRange}
-          </div> -->
+                <div v-if="streak > 1" class="streak">🔥{{ streak }}</div>
             </div>
-            <div
-                class="star" @click="router.push('mathHistory')">
-                <!-- <span>⭐</span> <span>{{score}}</span> -->
-                答题历史
-            </div>
-        </div>
-        <!--Game Area-->
+        </template>
+        <template #rightBtn>
+             <div class="star" @click="router.push('mathHistory')">答题历史</div>
+        </template>
+    </Navbar>
+    <div class="pt-20 h-screen flex w-screen flex-col items-center  p-3 md:p-4 bg-[#FED2E2] shadow-md">
         <div
             class="flex-1 w-full flex flex-col items-center bg-white rounded-3xl md:rounded-4xl shadow-xl p-3 md:p-8 border-b-8 relative overflow-hidden transition-colors duration-500">
            
@@ -78,13 +70,14 @@ import CartoonDialog from '@/components/CartoonDialog.vue';
 import MiniCartoonTimer from '@/components/MiniCartoonTime.vue';
 import BalloonAnimation from '@/components/BalloonAnimation.vue';
 import router from '@/router';
-import { ref, computed, useTemplateRef, onUnmounted, onMounted } from 'vue';
+import { ref, computed, useTemplateRef, onUnmounted, onMounted, nextTick} from 'vue';
 import { useDB } from '@/hooks/useDB';
 import { generateQuestions } from '@/utlits/question';
 onUnmounted(() => { 
     timerRef.value?.reset();
 })
 import { speak } from '@/utlits/audio';
+import Navbar from '@/components/Navbar.vue';
 onMounted(() => {
     speak()
 })
@@ -96,18 +89,12 @@ const curIndex = ref(0)
 const problem = ref(questionList.value[curIndex.value])
 
 const streak = ref(0);
-const message = ref({});
+
 const userAnswer = ref("");
-const leftRef = useTemplateRef('leftRef')
-const rightRef = useTemplateRef('rightRef')
-const resultRef = useTemplateRef('resultRef')
-// const borderClass = computed(() => {
-//     const type = message.value?.type;
-//     if (type === 'success') return 'border-green-500 text-green-500';
-//     if (type === 'error') return 'border-red-500 text-red-500';
-//     if (type === 'levelup') return 'border-purple-500 text-purple-500';
-//     return 'border-gray-300 text-orange-500';
-// });
+const leftRef1 = useTemplateRef('leftRef')
+const rightRef1 = useTemplateRef('rightRef')
+const resultRef1 = useTemplateRef('resultRef')
+
 
 const getRandomLRR = () => {
     const arr = ['left', 'right', 'result'];
@@ -117,30 +104,37 @@ const hiddenPlace = ref()
 const shakePlace = ref()
 hiddenPlace.value = getRandomLRR();
 
-const celebrationStages = [10, 25, 40, 50];
-const lastCelebrationStage = ref(0);
-const showCelebration = ref(false);
 
 const getResult = () => {
     const value = Number(userAnswer.value); 
     const correctAnswer = problem.value[hiddenPlace.value];
+    console.log('el-left', leftRef1.value)
+    console.log('el-right', rightRef1.value)
+    console.log('el-result', resultRef1.value)
+    const map = {
+    left: leftRef1,
+    right: rightRef1,
+    result: resultRef1
+  }
+
+    const el = map[hiddenPlace.value]?.value;
+    // let cur = 
+    
     if (value === correctAnswer) {
         score.value += 1;
         streak.value += 1;
-        message.value.type = 'success'
         speak("Correct! Good job!")
-        addShakeAnimation('success').then(res => {
+        addShakeAnimation(el,'success').then(res => {
             // const lastTimeMs =  timerRef.value?.reset();
             addToIndexDB()
             getNextQuestion()
     })
     } else {
         speak("Oops, try again.");
-        message.value.type = 'error'
         shakePlace.value = hiddenPlace.value;
         streak.value = 0;
        problem.value.wrongTimes += 1;
-        addShakeAnimation('error').then(res => { 
+        addShakeAnimation(el,'shake').then(res => { 
             userAnswer.value = '';
         })
     }
@@ -191,13 +185,14 @@ const getInput = (num) => {
     speak(userAnswer.value)
        
 };
-const addShakeAnimation = (status) => {
+const addShakeAnimation = (el, status) => {  
+    console.log("addShakeAnimation",el,status);
+      
     return new Promise((resolve) => {
-        let curRef = hiddenPlace.value == 'left' ? leftRef : hiddenPlace.value == 'right' ? rightRef : resultRef;
-    curRef.value.classList.add(`${status}`);
-        curRef.value.addEventListener('animationend',
+    el.classList.add(`${status}`);
+        el.addEventListener('animationend',
       () => {
-        curRef.value.classList.remove(`${status}`);
+        el.classList.remove(`${status}`);
         resolve()
       },
       {
@@ -219,15 +214,14 @@ const addShakeAnimation = (status) => {
     100% { transform: translateX(0); }
 }
 .shake {
+    background: #FFEBEE;
+ border-color: #FF5252;
+ color: #FF5252;
   animation: shake 0.5s ease-in-out;
 }
+
 div {
-     &.error {
-    background: #FFEBEE;
-    border-color: #FF5252;
-    color: #FF5252;
-    animation: shake 0.4s;
-  }
+   
 
   /* 正确状态 */
   &.success {

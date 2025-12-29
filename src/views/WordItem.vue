@@ -1,5 +1,8 @@
 <template>
-  <div>
+  <Navbar>
+    <template #navTitle>{{route.params.type}}</template>
+  </Navbar>
+  <div class="pt-[60px]">
     <WordCard :list="list"  />
   </div>
 </template>
@@ -9,10 +12,11 @@ import { WEEK_DATA, MONTH_DATA } from '@/constant';
 import { onMounted, ref, watch } from 'vue';
 import { useRoute } from 'vue-router';
 import WordCard from '@/components/WordCard.vue';
+import Navbar from '@/components/Navbar.vue';
 const route = useRoute()
 const typeObj = {
-  1: WEEK_DATA,
-  2: MONTH_DATA
+  "Week": WEEK_DATA,
+  "Month": MONTH_DATA
 };
 const list = ref([])
 watch(() => route.params, () => {

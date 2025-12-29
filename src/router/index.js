@@ -6,7 +6,7 @@ const router = createRouter({
   routes: [
     {
       path: '/',
-      component: () => import('../views/Home.vue'), // 直接渲染 Home
+      component: () => import('../views/HomeView.vue'), // 直接渲染 Home
       name: 'home'
     },
     {

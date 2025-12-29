@@ -6,7 +6,8 @@ const router = createRouter({
   routes: [
     {
       path: '/',
-      redirect: 'home',
+      component: () => import('./views/Home.vue'), // 直接渲染 Home
+      name: 'home'
     },
     {
       path: '/home',

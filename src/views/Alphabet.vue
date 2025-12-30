@@ -8,7 +8,7 @@
     <div class="grid grid-cols-4 md:grid-cols-5 gap-4 md:gap-6 max-w-5xl mx-auto pb-24">
       <button v-for="(letter,idx) in alphabets"
       :key="letter"
-      class="aspect-square flex items-baseline justify-center gap-1 rounded-2xl shadow-lg hover:rotate-2 transition-transform"
+      class="aspect-square flex items-center justify-center gap-1 rounded-2xl shadow-lg hover:rotate-2 transition-transform"
       :class="getColor(idx)"
       @click="playAudio(letter)"
       >
@@ -25,7 +25,6 @@
 <script setup>
 import { ref } from 'vue';  
 import { ALPHABET_DATA } from '@/constant';
-import router from '@/router';
 import { useSpeechSynthesis } from '@vueuse/core';
 const alphabets = ALPHABET_DATA;
 const colors = [

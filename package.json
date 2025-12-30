@@ -20,6 +20,7 @@
     "firebase": "^12.6.0",
     "html2canvas": "^1.4.1",
     "pinia": "^3.0.4",
+    "pinyin": "^4.0.0",
     "tailwindcss": "^4.1.17",
     "vue": "^3.5.25",
     "vue-router": "^4.6.3"

@@ -26,7 +26,13 @@ const router = createRouter({
     {
       path: '/chinese',
       name: 'chinese',
-      component: () => import('../views/Chinese.vue')
+      component: () => import('../views/Chinese.vue'),
+      
+    },
+    {
+      path: '/guwen/:type',
+      name: 'guwen',
+      component: () => import('../views/guwen.vue'),
     },
     {
       path:'/alphabet',

@@ -1,6 +1,6 @@
 <template>
  <Navbar>
-  <template #navTitle>中国话</template>
+  中国话
  </Navbar>
  <div class="pt-[60px]">
     <div class="grid grid-cols-3 md:grid-cols-6 h-[130px] gap-2 p-2">
@@ -23,12 +23,20 @@ import Navbar from '@/components/Navbar.vue';
 import router from '@/router';
 const lists = [
   {label:'拼音',routeName:'pinyin',sub:'a o e'},
+  {label:'千字文',routeName:'',sub:'天地玄黄',type:'QZW'},
+  {label:'百家姓',routeName:'',sub:'姓氏一览',type:'BJX'},
+  {label:'三字经',routeName:'',sub:'启蒙',type:'SZJ'},
 ]
 const handleCardClick = (item) => { 
   if (item.routeName != "") {
     router.push(item.routeName)
   } else { 
-    
+    router.push({
+      name: 'guwen',
+      params: {
+        type:item.type
+      }
+    })
   }
   
 };

@@ -4,7 +4,7 @@
       <div @click="router.go(-1)"> &#8592; </div>
     </div>
     <div class="flex-1/3 flex items-center justify-center">
-      <slot name="navTitle"></slot>
+      <slot></slot>
     </div>
     <div class="flex-1/3">
       <slot name="rightBtn"></slot>

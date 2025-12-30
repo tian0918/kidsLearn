@@ -1,6 +1,6 @@
 <template>
   <Navbar>
-    <template #navTitle>{{route.params.type}}</template>
+   {{route.params.type}}
   </Navbar>
   <div class="pt-[60px]">
     <WordCard :list="list"  />

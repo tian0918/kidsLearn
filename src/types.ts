@@ -14,6 +14,11 @@ export enum PinyinCategory {
   YUNMU = '韵母',
   ZHENGTI = '整体认读'
 }
+export enum GuWenCategory {
+  QZW = '千字文',
+  BJX = '百家姓',
+  SZJ = '三字经'
+}
 
 export interface CardData {
   char: string;

@@ -27,7 +27,6 @@ import { speak } from '@/utlits/audio';
 const wordList = ref([])
 const playSound = (item) => { 
   // console.log("playSound",item);
-  speak(`${item.zh}`,'zh-CN')
   speak(`${item.en}`)
 };
 watch(props.list, (newVal) => { 

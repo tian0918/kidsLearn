@@ -1,10 +1,10 @@
 <template>
     <Navbar>
-        <template #navTitle>
+        
             <div class="flex gap-2">
                 <div v-if="streak > 1" class="streak">🔥{{ streak }}</div>
             </div>
-        </template>
+        
         <template #rightBtn>
              <div class="star" @click="router.push('mathHistory')">答题历史</div>
         </template>

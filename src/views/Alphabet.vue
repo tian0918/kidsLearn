@@ -1,6 +1,6 @@
 <template>
   <Navbar>
-    <template #navTitle>Alphabet</template>
+   Alphabet
   </Navbar>
 <div class="pt-[60px] flex flex-col h-screen overflow-hidden bg-sky-50">
 
@@ -12,8 +12,8 @@
       :class="getColor(idx)"
       @click="playAudio(letter)"
       >
-      <span class="relative top--1/2 translate-y-1/2 text-3xl font-black text-white drop-shadow-sm">{{letter}}</span>
-      <span class="relative top--1/2 translate-y-1/2 text-2xl text-white/80 font-bold mt-2">{{letter.toLowerCase()}}</span>
+      <span class="text-3xl font-black text-white drop-shadow-sm">{{letter}}</span>
+      <span class="text-2xl text-white/80 font-bold mt-2">{{letter.toLowerCase()}}</span>
     
       
       </button>

@@ -1,6 +1,6 @@
 <template>
   <Navbar>
-    <template #navTitle>Learn Words</template>
+   Learn Words
   </Navbar>
   <div class="pt-[60px]">
     <div class="grid grid-cols-3 md:grid-cols-6 h-[130px] gap-2 p-2">

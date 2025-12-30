@@ -1,8 +1,8 @@
 <template>
   <Navbar>
-    <template #navTitle>
+   
       <h2>拼音王国</h2>
-    </template>
+    
   </Navbar>
   <div class="pt-[60px] flex flex-col h-screen overflow-hidden">
 

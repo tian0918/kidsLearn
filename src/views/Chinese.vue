@@ -3,13 +3,13 @@
   中国话
  </Navbar>
  <div class="pt-[60px]">
-    <div class="grid grid-cols-3 md:grid-cols-6 h-[130px] gap-2 p-2">
+    <div class="grid grid-cols-3 md:grid-cols-6 h-[280px] gap-2 p-2">
       <div class="card flex-center" @click="handleCardClick(item)" v-for="item in lists">
        <div class="flex-center flex-col">
-         <div class="text-2xl">
+         <div class="text-2xl font-ui">
           {{item.label}}
         </div>
-        <div class="text-[14px]">
+        <div class="font-cute">
           {{item.sub}}
         </div>
        </div>
@@ -43,5 +43,7 @@ const handleCardClick = (item) => {
 </script>
 
 <style  scoped>
-
+.sksksksks {
+  font-family: 'ZCOO LKuaiLe', Times, serif;
+}
 </style>

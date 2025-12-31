@@ -81,6 +81,8 @@ const router = createRouter({
       component: () => import('../views/MaxthHistory.vue')
     }
   ],
+  
 });
 
 export default router;
+

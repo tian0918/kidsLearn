@@ -2,6 +2,10 @@
 @import './base.css';
 @import '../styles/keyboard.css';
 @import './custom.css';
+@theme{
+  --font-cute:ZCOO LKuaiLe,sans-serif;
+  --font-ui:Noto Sans SC, sans-serif;
+}
 #app {
   max-width: 100vw;
   /* height: 100vh; */

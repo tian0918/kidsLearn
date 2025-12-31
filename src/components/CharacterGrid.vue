@@ -2,7 +2,7 @@
   <div class="flex flex-col items-center justify-end ">
     <svg
     viewBox="0 0 100 100"
-    class="bg-white w-10 h-10 md:w-20 md:h-20"
+    class="bg-white w-[50px] h-[50px] md:w-30 md:h-30"
   >
     <line x1="0" y1="20" x2="0" y2="80" stroke="#7bf1a8" stroke-width="2" />
     <line x1="100" y1="20" x2="100" y2="80" stroke="#7bf1a8" stroke-width="2" />
@@ -31,7 +31,7 @@
     <!-- </div> -->
    
   <div
-    class="relative flex items-center justify-center bg-white border border-green-300 w-10 h-10 md:w-20 md:h-20"
+    class="relative flex items-center justify-center bg-white border border-green-300 w-[50px] h-[50px] sm:w-[90px] sm:h-[90px] md:w-30 md:h-30"
     
   >
     <!-- 横线 -->
@@ -50,10 +50,10 @@
     
     <!-- 汉字 -->
     <span
-      class="z-10 select-none"
+      class="z-10 select-none text-[30px] md:text-[80px] font-ui"
       :class="charClass"
       :style="{
-        fontSize: fontSize + 'px',
+      
         color: color,
         lineHeight: 1
       }"
@@ -75,7 +75,7 @@ const props = defineProps({
   },
   fontSize: {
     type: Number,
-    default: 22
+    default: 80
   },
   color: {
     type: String,

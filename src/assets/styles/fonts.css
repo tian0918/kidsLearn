@@ -1,0 +1,13 @@
+@font-face {
+  font-family: "Noto Sans SC";
+  src: url("../fonts/NotoSansSC-Regular.otf") format("opentype");
+  font-weight: 400;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: "ZCOO LKuaiLe";
+  src: url("../fonts/ZCOOLKuaiLe-Regular.ttf") format("opentype");
+  font-weight: 400;
+  font-style: normal;
+}

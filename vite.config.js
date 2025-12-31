@@ -12,6 +12,7 @@ export default defineConfig({
     vueJsx(),
     // vueDevTools(),
     tailwindcss(),
+   
   ],
   server: {
     host:'0.0.0.0',

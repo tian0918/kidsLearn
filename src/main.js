@@ -1,4 +1,5 @@
 import './assets/main.css'
+import "@/assets/styles/fonts.css";
 import Navbar from './components/Navbar.vue'
 import { createApp } from 'vue'
 

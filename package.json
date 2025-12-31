@@ -19,6 +19,7 @@
     "file-saver": "^2.0.5",
     "firebase": "^12.6.0",
     "html2canvas": "^1.4.1",
+    "openai": "^6.15.0",
     "pinia": "^3.0.4",
     "pinyin": "^4.0.0",
     "tailwindcss": "^4.1.17",

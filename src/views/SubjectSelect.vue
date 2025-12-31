@@ -31,7 +31,7 @@
         <!-- 右侧文字内容 -->
         <div class="card-content">
           <h3>{{ item.title }}</h3>
-          <p>{{ item.desc }}</p>
+          <p class="font-ui">{{ item.desc }}</p>
         </div>
 
         <!-- 装饰性箭头 -->
@@ -260,7 +260,6 @@ const selectSubject = (item) => {
     margin: 0;
     font-size: 13px;
     opacity: 0.9;
-    font-weight: 500;
   }
 }
 

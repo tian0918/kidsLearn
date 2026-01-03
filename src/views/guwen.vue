@@ -20,14 +20,14 @@
           </div>
           <template v-if="navTitle == '三字经' && groupIndex % 2 != 0">
             <div class="flex gap-4 items-baseline m-1.5">
-            <!-- <span class="text-2xl">🗣️</span> -->
+            <span class="text-2xl" @click="playAuido(groupIndex)">🗣️</span>
             <span @click="getExplain(groupIndex)" class="text-1xl">🤖</span>
           </div>
           </template>
           <template v-else>
             <div class="flex gap-4 items-baseline">
             <div class="flex items-center">
-              <!-- <span class="text-2xl">🗣️</span> -->
+              <span class="text-2xl" @click="playAuido(groupIndex)">🗣️</span>
             <span @click="getExplain(groupIndex)" class="text-1xl block">🤖</span>
             </div>
           </div>
@@ -107,9 +107,13 @@ const getExplain = async (groupIndex) => {
 
 // 语音播放
 const playAuido = (groupIndex) => {
-  let content = list.value[groupIndex];
-  let strin = content.join('');
-  speak(strin, 'zh-CH');
+  let explainContent = "";
+  if (navTitle.value == '三字经') {
+    explainContent = list.value.filter((item, index) => (index >= groupIndex - 1 && index <= groupIndex)).join(',');
+  } else {
+    explainContent = list.value[groupIndex].join('');
+  }
+  speak(explainContent, 'zh-CH');
 };
 const navTitle = computed(() => {
   return GuWenCategory[route.params.type];

@@ -212,17 +212,17 @@ const selectSubject = (item) => {
 
 /* 主题配色 (渐变色) */
 .theme-chinese {
-  background: linear-gradient(135deg, #FF9966 0%, #FF5E62 100%);
+  background: linear-gradient(135deg, rgb(255, 153, 102) 0%, rgb(255, 94, 98) 100%);
   box-shadow: 0 10px 20px rgba(255, 94, 98, 0.3);
 }
 
 .theme-english {
-  background: linear-gradient(135deg, #4FACFE 0%, #00F2FE 100%);
+  background: linear-gradient(135deg, rgb(79, 172, 254) 0%, rgb(0, 242, 254) 100%);
   box-shadow: 0 10px 20px rgba(79, 172, 254, 0.3);
 }
 
 .theme-math {
-  background: linear-gradient(135deg, #43E97B 0%, #38F9D7 100%);
+  background: linear-gradient(135deg, rgb(67, 233, 123) 0%, rgb(56, 249, 215) 100%);
   box-shadow: 0 10px 20px rgba(67, 233, 123, 0.3);
   
   /* 数学主题文字颜色深一点点可能更好看，或者保持白色统一 */

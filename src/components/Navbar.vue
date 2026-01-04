@@ -6,7 +6,7 @@
     <div class="flex-1/3 flex items-center justify-center">
       <slot></slot>
     </div>
-    <div class="flex-1/3">
+    <div class="flex items-end">
       <slot name="rightBtn"></slot>
     </div>
   </div>

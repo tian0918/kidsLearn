@@ -4,7 +4,7 @@ const getWindowVoives =  () => {
   const loadVoices = () => {
     voices = window.speechSynthesis.getVoices();
     if(voices.length > 0) {
-      console.log("----",voices.filter(item => item.lang == 'en-US').find(item => item.name.includes('Google')));
+     
       
       let zh = voices.filter(item => item.lang == 'zh-CN')[0].voiceURI;
       let en = voices.filter(item => item.lang == 'en-US').find(item => item.name.includes('Google')).voiceURI;
@@ -27,7 +27,7 @@ export const speak = (text,lang = 'en-US') => {
   
   const utterance = new SpeechSynthesisUtterance(text);
   utterance.lang = lang;
-  utterance.rate = lang == 'zh-CN' ? 1.0 : 0.5; // Slightly slower for clear enunciation
+  utterance.rate = lang == 'zh-CN' ? 1.5 : 0.5; // Slightly slower for clear enunciation
   utterance.pitch = 1.0; // Slightly higher pitch to sound friendlier
 
   // Try to select a "Google" voice if available as they tend to be higher quality

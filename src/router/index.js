@@ -79,6 +79,11 @@ const router = createRouter({
       path: '/mathHistory',
       name: 'mathHistory',
       component: () => import('../views/MaxthHistory.vue')
+    },
+    {
+      path: '/demo',
+      name: 'demoview',
+      component: () => import("../views/demo.vue")
     }
   ],
   

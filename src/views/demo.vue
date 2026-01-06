@@ -24,6 +24,7 @@
 <script setup>
 import { ref, onMounted } from 'vue'
 import gsap from 'gsap'
+import axios from 'axios'
 
 // 初始糖果数量和总数量
 const initialCandyCount = 8
@@ -46,8 +47,16 @@ const displayedSteps = ref([])
 
 // 打字机每个字符显示间隔
 const typingSpeed = 20
+const getAllVoices = async() => { 
+  const res = await axios.get("http://192.168.2.120:8964/voices")
+  if (res.status == 0) { 
+    console.log("--获取所有voices",res.data);
 
+  }
+  
+};
 onMounted(() => {
+  getAllVoices()
   const tl = gsap.timeline({ defaults: { duration: 0.4, ease: 'power2.out' } })
 
   // 1️⃣ 先让前 8 个糖果弹跳到行

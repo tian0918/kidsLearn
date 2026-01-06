@@ -43,6 +43,7 @@
     </div>
 
   </div>
+  <audio v-if="audioUrl" :src="audioUrl" controls autoplay class="audio-player"></audio>
 </template>
 
 <script setup>
@@ -113,7 +114,46 @@ const playAuido = (groupIndex) => {
   } else {
     explainContent = list.value[groupIndex].join('');
   }
-  speak(explainContent, 'zh-CH');
+
+  // speak(explainContent, 'zh-CH');
+  getSpeech(explainContent);
+};
+import axios from 'axios';
+const audioUrl = ref(null);
+const getSpeech = async (content) => { 
+  const res = await axios.get('/api/stream-audio',  {
+    params: {
+      text: content,
+      voice:'zh-CN-XiaoxiaoNeural'
+    },
+    responseType: 'blob'
+    }
+  );
+
+    if (audioUrl.value) URL.revokeObjectURL(audioUrl.value); // Clean up old memory
+    const blob = new Blob([res.data], { type: 'audio/mpeg' });
+  audioUrl.value = URL.createObjectURL(blob);
+  localStorage.setItem(content, blob);
+    console.log(audioUrl.value);
+    
+  
+};
+const getSpeech1 = async (content) => { 
+  const res = await axios.get('/api/generate-and-save',  {
+    params: {
+      text: content,
+      voice:'zh-CN-XiaoxiaoNeural'
+    },
+    responseType: 'blob'
+    }
+  );
+  console.log(res);
+  
+    
+    // if (audioUrl.value) URL.revokeObjectURL(audioUrl.value); // Clean up old memory
+    // const blob = new Blob([res.data], { type: 'audio/mpeg' });
+    // audioUrl.value = URL.createObjectURL(blob);
+  
 };
 const navTitle = computed(() => {
   return GuWenCategory[route.params.type];

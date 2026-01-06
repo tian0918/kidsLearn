@@ -49,6 +49,6 @@ async def list_voice(
     filterList = voices.voices
   return filterList
 
-if __name__ == "__main__":
-  import uvicorn
-  uvicorn.run(app, host="0.0.0.0", port=8964)
+# if __name__ == "__main__":
+#   import uvicorn
+#   uvicorn.run(app, host="0.0.0.0", port=8964)

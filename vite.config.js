@@ -14,19 +14,13 @@ export default defineConfig({
     tailwindcss(),
    
   ],
-  // build: {
-  //   chunkSizeWarningLimit: 500,
-  //   rolldownOptions: {
-  //     output: {
-  //       advancedChunks
-  //     }
-  //   }
-  // }
   server: {
     host: '0.0.0.0',
     proxy: {
-      '/api': 'http://localhost:8964',
-      changeOrigin: true,
+      '/api': {
+        target: 'http://localhost:8964',
+        changeOrigin: true,
+      }
     }
   },
   resolve: {

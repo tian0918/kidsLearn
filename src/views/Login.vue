@@ -83,8 +83,7 @@ const password = ref('');
 <script setup>
 import { reactive, ref } from 'vue';
 import { useRouter } from 'vue-router';
-import { auth } from '@/firebase';
-import { signInWithEmailAndPassword, createUserWithEmailAndPassword } from "firebase/auth";
+
 // 定义表单数据
 const form = reactive({
   email: '',
